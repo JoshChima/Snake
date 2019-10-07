@@ -1,0 +1,11 @@
+Handler
+function: {
+    -generate state information by game intake.
+    -intakes: {
+        -moves
+        -game snapshot
+    }
+    returns: {
+        
+    }
+    }

@@ -1,0 +1,1 @@
+command: noedmon to start app

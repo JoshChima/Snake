@@ -1,0 +1,25 @@
+{
+  "name": "snake",
+  "version": "1.0.0",
+  "description": "Snake RL",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoshChima/Snake.git"
+  },
+  "author": "Joshua Chima",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JoshChima/Snake/issues"
+  },
+  "homepage": "https://github.com/JoshChima/Snake#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.17.1",
+    "pg": "^7.12.1",
+    "socket.io": "^2.3.0"
+  }
+}
