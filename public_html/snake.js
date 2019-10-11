@@ -1,56 +1,75 @@
 
 function keyPressed() {
-    if (keyCode === UP_ARROW) {
-        if (s.getdiry() === 1) {}
-        else {s.dir(0, -1);}
-    } else if (keyCode === DOWN_ARROW) {
-        if (s.getdiry() === -1) {}
-        else {s.dir(0, 1);}
-    } else if (keyCode === LEFT_ARROW) {
-        if (s.getdirx() === 1) {}
-        else {s.dir(-1, 0);}
-    } else if (keyCode === RIGHT_ARROW) {
-        if (s.getdirx() === -1) {}
-        else {s.dir(1, 0);}
-    }
-    
-    socket.emit('move', s.data());
-}
-function botPressed(move) {
-    switch(move) {
-        case UP:
+    if (s.AUTOMATION_ON) {}
+    else {
+        if (keyCode === UP_ARROW) {
             if (s.getdiry() === 1) {}
             else {s.dir(0, -1);}
+        } else if (keyCode === DOWN_ARROW) {
+            if (s.getdiry() === -1) {}
+            else {s.dir(0, 1);}
+        } else if (keyCode === LEFT_ARROW) {
+            if (s.getdirx() === 1) {}
+            else {s.dir(-1, 0);}
+        } else if (keyCode === RIGHT_ARROW) {
+            if (s.getdirx() === -1) {}
+            else {s.dir(1, 0);}
+        } else if (event.key === "s") {
+            saveCanvas(c, "frame_test", "png");
+        }
+        
+        socket.emit('move', s.data());
+    }
+}
+function botPressed(move) {
+    if (s.AUTOMATION_ON === false) {
+        switch(move) {
+        case UP:
+            if (s.getdiry() === 1) {}
+            else {
+                s.dir(0, -1);
+                socket.emit('move', s.data());}
             break;
         case DOWN:
             if (s.getdiry() === -1) {}
-            else {s.dir(0, 1);}
+            else {
+                s.dir(0, 1);
+                socket.emit('move', s.data());}
             break;
         case LEFT:
             if (s.getdirx() === 1) {}
-            else {s.dir(-1, 0);}
+            else {
+                s.dir(-1, 0);
+                socket.emit('move', s.data());}
             break;
         case RIGHT:
             if (s.getdirx() === -1) {}
-            else {s.dir(1, 0);}
+            else {
+                s.dir(1, 0);
+                socket.emit('move', s.data());}
             break;
         default:
-            break;        
-    }
+            break;
+        }
+    } else {}
 }
 function between(x, min, max) {
     return x >= min && x <= max;
   }
-function Snake() {
+function Snake(auto) {
     console.log(width, height)
     this.x = (width)/2;
     this.y = (height)/2;
     this.xspeed = 1;
     this.yspeed = 0;
     this.total = 0;
+
+    this.AUTOMATION_ON = auto;
     
     this.livingscore = 0.5;
     this.score = 0;
+
+    this.isalive = true;
 
     this.tail = [];
 
@@ -60,7 +79,8 @@ function Snake() {
             x: this.x,
             y: this.y,
             xspeed: this.xspeed,
-            yspeed: this.yspeed
+            yspeed: this.yspeed,
+            isalive: this.isalive
         }
         return data
     }
@@ -89,46 +109,44 @@ function Snake() {
         return this.yspeed
     }
 
+    this.reset = function() {
+        console.log('Starting over')
+        drawstamp = 0;
+        this.total = 0;
+        this.tail = [];
+        this.x = (width)/2;
+        this.y = (height)/2;
+        this.score = 0;
+        this.xspeed = 1;
+        this.yspeed = 0;
+        this.isalive = true;
+    }
+
     this.death = function() {
         if (between((this.x + this.xspeed*scl), 0, width-scl) === false) {
-            console.log('Starting over')
-            this.total = 0;
-            this.tail = [];
-            this.x = (width)/2;
-            this.y = (height)/2;
-            this.score = 0;
-            this.xspeed = 1;
-            this.yspeed = 0;
+            this.isalive = false;
+            socket.emit('dead', state());
+            this.reset()
         }
         if (between((this.y + this.yspeed*scl), 0, height-scl) == false) {
-            console.log('Starting over')
-            this.total = 0;
-            this.tail = [];
-            this.x = (width)/2;
-            this.y = (height)/2;
-            this.score = 0;
-            this.xspeed = 1;
-            this.yspeed = 0;
+            this.isalive = false;
+            socket.emit('dead', state());
+            this.reset()
         }
         for (var i = 0; i < this.tail.length; i++) {
             var pos = this.tail[i];
             var d = dist(this.x, this.y, pos.x, pos.y);
             if (d < 1) {
-                console.log('Starting over')
-                this.total = 0;
-                this.tail = [];
-                this.x = (width)/2;
-                this.y = (height)/2;
-                this.score = 0;
-                this.xspeed = 1;
-                this.yspeed = 0;
+                this.isalive = false;
+                socket.emit('dead', state());
+                this.reset()
             }
         }
         
     }
 
     this.update = function() {
-        if (this.total == this.tail.length) {
+        if (this.total === this.tail.length) {
             for (var i = 0; i < this.total-1; i++) {
                 this.tail[i] = this.tail[i+1];
             }

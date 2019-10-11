@@ -17,9 +17,23 @@ function newConnection(socket) {
    console.log('new connection: ' + socket.id);
 
    socket.on('move', moveMsg);
+   socket.on('dead', deathMsg);
+   socket.on('drawn', drawnMsg);
 
    function moveMsg(data) {
-      console.log('Score: ' + data.score)
-      console.log('Sending Move: ' + data.x + ', ' + data.y)
+      // console.log('Score: ' + data.score)
+      // console.log('Sending Move: ' + data.x + ', ' + data.y)
+      console.log("Move");
+      console.log(data)
+   }
+
+   function deathMsg(data) {
+      console.log("Death");
+      console.log(data)
+   }
+
+   function drawnMsg(data) {
+      console.log("Drawn");
+      console.log(data)
    }
 }
