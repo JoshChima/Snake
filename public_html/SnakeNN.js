@@ -202,6 +202,7 @@ class Matrix {
         return m;
     }
 
+
     // check matrices have the same dimensions
     static checkDimensions(m0, m1) {
         if (m0.rows != m1.rows || m0.cols != m1.cols) {

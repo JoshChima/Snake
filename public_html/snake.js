@@ -1,6 +1,6 @@
 
 function keyPressed() {
-    if (s.AUTOMATION_ON) {}
+    if (s.AUTOMATION_ON == true) {}
     else {
         if (keyCode === UP_ARROW) {
             if (s.getdiry() === 1) {}
@@ -15,7 +15,10 @@ function keyPressed() {
             if (s.getdirx() === -1) {}
             else {s.dir(1, 0);}
         } else if (event.key === "s") {
-            saveCanvas(c, "frame_test", "png");
+            // logImage(saveFrames("dummy", "png", 1, 1, data => {
+            //     return data;
+            // }))
+            //saveCanvas(c, "frame_test", "png");
         }
         
         socket.emit('move', s.data());
