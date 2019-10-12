@@ -30,8 +30,20 @@ function runScript(){
   ]);
 }
 
+
+
+//####################################
+
+console.log("My socket server is running");
+
+var socket = require('socket.io')
+
+var io = socket(server);
+
 const subprocess = runScript()
+io.sockets.on('connection', newConnection);
 wait(5)
+
 
 // print output of script
 subprocess.stdout.on('data', (data) => {
@@ -47,15 +59,6 @@ subprocess.on('close', () => {
   console.log("Closed");
 });
 
-//####################################
-
-console.log("My socket server is running");
-
-var socket = require('socket.io')
-
-var io = socket(server);
-
-io.sockets.on('connection', newConnection);
 
 function newConnection(socket) {
    console.log('new connection: ' + socket.id);

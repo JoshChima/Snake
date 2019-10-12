@@ -40,15 +40,24 @@ def main(argv):
     #              n_actions=6, mem_size=1000000, batch_size=64, epsilon_end=0.01, agent_num='1')
 
     while True:
-        with open('transfer.json') as json_file:
-            data = json.load(json_file)
-            turn = data['turn']
-            print(turn)
+        json_file = open('transfer.json', "r")
+        data = json.load(json_file)
+        turn = data['turn']
+        print(turn)
+        json_file.close()
 
-            if turn == 'py':
-                data['move'] = random.choice(['UP','Down','LEFT','RIGHT', ''])
-                data['turn'] = 'node'
-                print('AUTO_Move')
+        if turn == 'py':
+            data['move'] = random.choice(['UP','Down','LEFT','RIGHT', ''])
+            data['turn'] = 'node'
+
+            jsonFile = open("replayScript.json", "w+")
+            jsonFile.write(json.dumps(data))
+            jsonFile.close()
+            print('AUTO_Move')
+
+        else:
+            pass
+
 
         # "file_name": "",
         # "move": "",

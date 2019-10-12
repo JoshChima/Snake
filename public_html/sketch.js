@@ -3,7 +3,7 @@ var s;
 var scl = 20;
 var now = new Date().getMilliseconds();
 var c;
-var fr = 1;
+var fr = 0.5;
 //var img;
 
 var AUTO = true;
