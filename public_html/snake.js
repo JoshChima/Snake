@@ -1,61 +1,5 @@
 
-function keyPressed() {
-    if (s.AUTOMATION_ON == true) {}
-    else {
-        if (keyCode === UP_ARROW) {
-            if (s.getdiry() === 1) {}
-            else {s.dir(0, -1);}
-        } else if (keyCode === DOWN_ARROW) {
-            if (s.getdiry() === -1) {}
-            else {s.dir(0, 1);}
-        } else if (keyCode === LEFT_ARROW) {
-            if (s.getdirx() === 1) {}
-            else {s.dir(-1, 0);}
-        } else if (keyCode === RIGHT_ARROW) {
-            if (s.getdirx() === -1) {}
-            else {s.dir(1, 0);}
-        } else if (event.key === "s") {
-            // logImage(saveFrames("dummy", "png", 1, 1, data => {
-            //     return data;
-            // }))
-            //saveCanvas(c, "frame_test", "png");
-        }
-        
-        socket.emit('move', s.data());
-    }
-}
-function botPressed(move) {
-    if (s.AUTOMATION_ON === false) {
-        switch(move) {
-        case UP:
-            if (s.getdiry() === 1) {}
-            else {
-                s.dir(0, -1);
-                socket.emit('move', s.data());}
-            break;
-        case DOWN:
-            if (s.getdiry() === -1) {}
-            else {
-                s.dir(0, 1);
-                socket.emit('move', s.data());}
-            break;
-        case LEFT:
-            if (s.getdirx() === 1) {}
-            else {
-                s.dir(-1, 0);
-                socket.emit('move', s.data());}
-            break;
-        case RIGHT:
-            if (s.getdirx() === -1) {}
-            else {
-                s.dir(1, 0);
-                socket.emit('move', s.data());}
-            break;
-        default:
-            break;
-        }
-    } else {}
-}
+
 function between(x, min, max) {
     return x >= min && x <= max;
   }
@@ -128,12 +72,12 @@ function Snake(auto) {
     this.death = function() {
         if (between((this.x + this.xspeed*scl), 0, width-scl) === false) {
             this.isalive = false;
-            socket.emit('dead', state());
+            if (SERVER_ON) {socket.emit('dead', state());}
             this.reset()
         }
         if (between((this.y + this.yspeed*scl), 0, height-scl) == false) {
             this.isalive = false;
-            socket.emit('dead', state());
+            if (SERVER_ON) {socket.emit('dead', state());}
             this.reset()
         }
         for (var i = 0; i < this.tail.length; i++) {
@@ -141,7 +85,7 @@ function Snake(auto) {
             var d = dist(this.x, this.y, pos.x, pos.y);
             if (d < 1) {
                 this.isalive = false;
-                socket.emit('dead', state());
+                if (SERVER_ON) {socket.emit('dead', state());}
                 this.reset()
             }
         }

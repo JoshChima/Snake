@@ -40,24 +40,24 @@ var socket = require('socket.io')
 
 var io = socket(server);
 
-const subprocess = runScript()
+//const subprocess = runScript()
 io.sockets.on('connection', newConnection);
 wait(5)
 
 
 // print output of script
-subprocess.stdout.on('data', (data) => {
-  console.log(`data:${data}`);
-  if (data === 'AUTO_Move') {
-   socket.emit('AUTO_Move',data);
-  }
-});
-subprocess.stderr.on('data', (data) => {
-  console.log(`error:${data}`);
-});
-subprocess.on('close', () => {
-  console.log("Closed");
-});
+// subprocess.stdout.on('data', (data) => {
+//   console.log(`data:${data}`);
+//   if (data === 'AUTO_Move') {
+//    socket.emit('AUTO_Move',data);
+//   }
+// });
+// subprocess.stderr.on('data', (data) => {
+//   console.log(`error:${data}`);
+// });
+// subprocess.on('close', () => {
+//   console.log("Closed");
+// });
 
 
 function newConnection(socket) {
@@ -65,7 +65,7 @@ function newConnection(socket) {
 
    socket.on('move', moveMsg);
    socket.on('dead', deathMsg);
-   socket.on('AUTO_Move', autoMove);
+   //socket.on('AUTO_Move', autoMove);
 
    function moveMsg(data) {
       // console.log('Score: ' + data.score)
