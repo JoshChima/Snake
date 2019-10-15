@@ -4,9 +4,14 @@ var app = express();
 var server = app.listen(3000);
 var fs = require('fs');
 
+
+
+
+
+
 //#####For Running Python Script #####
-const path = require('path')
-const {spawn} = require('child_process')
+//const path = require('path')
+//const {spawn} = require('child_process')
 
 function wait(ms){
    var start = new Date().getTime();
@@ -40,9 +45,9 @@ var socket = require('socket.io')
 
 var io = socket(server);
 
-//const subprocess = runScript()
+// const subprocess = runScript()
 io.sockets.on('connection', newConnection);
-wait(5)
+//wait(5)
 
 
 // print output of script

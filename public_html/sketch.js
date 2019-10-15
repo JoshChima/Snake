@@ -1,3 +1,7 @@
+//var spawn = require('child_process').spawn;
+//var py = spawn('python', ['../RL_snake.py']);
+var priorMove = [];
+
 var socket;
 var s;
 var scl = 20;
@@ -5,6 +9,8 @@ var now = new Date().getMilliseconds();
 var c;
 var fr = 10;
 var paused = true;
+
+
 //var img;
 
 var AUTO = false;
@@ -50,7 +56,6 @@ function setup() {
 }
 
 function draw() {
-
     background(51);
 
     //image(img, 0, 0)
@@ -72,10 +77,44 @@ function draw() {
         //saveCanvas(c, fname, "png");
         if (SERVER_ON) {socket.emit('AUTO_Move', fname);}
         if (SERVER_ON) {socket.on('AUTO_Move', movement);}
-
     }
 
+    //requestMove();
+
     drawstamp++;
+}
+
+function requestMove() {
+    noLoop()
+    const subprocess = runScript()
+
+    subprocess.stdout.on('data', (data) => {
+        console.log(`data:${data}`);
+        if (data === 'AUTO_Move') {
+         socket.emit('AUTO_Move',data);
+        }
+      });
+      subprocess.stderr.on('data', (data) => {
+        console.log(`error:${data}`);
+      });
+      subprocess.on('close', () => {
+        console.log("Closed");
+      });
+    
+    // py.stdin.write(JSON.stringify('AUTO_MOVE'));
+
+    // py.stdout.on('data', function(data){
+    //     append(priorMove, data.toString());
+    // });
+
+    // py.stdout.on('end', function(){
+    //     console.log(priorMove);
+    // })
+
+    // py.stdin.end();
+
+    console.log('uno')
+    loop();
 }
 
 function pickLocation(){

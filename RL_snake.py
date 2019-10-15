@@ -68,7 +68,16 @@ def main(argv):
         #     print('Website: ' + p['website'])
         #     print('From: ' + p['from'])
         #     print('')
-    
+
+def read_in():
+    lines = sys.stdin.readlines()
+    return json.load(lines[0])
+
+def main_com():
+    lines = read_in()
+    print(random.choice(['UP','Down','LEFT','RIGHT', '']))
+
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    #main(sys.argv[1:])
+    main_com()
