@@ -9,10 +9,7 @@ function Snake(auto) {
     this.y = (height)/2;
     this.xspeed = 1;
     this.yspeed = 0;
-    this.total = 0;
-
-    this.AUTOMATION_ON = auto;
-    
+    this.total = 0;    
     this.livingscore = 0.5;
     this.score = 0;
 
@@ -31,7 +28,6 @@ function Snake(auto) {
         }
         return data
     }
-
 
     this.eat = function(pos) {
         var d = dist(this.x, this.y, pos.x, pos.y);
@@ -72,12 +68,10 @@ function Snake(auto) {
     this.death = function() {
         if (between((this.x + this.xspeed*scl), 0, width-scl) === false) {
             this.isalive = false;
-            if (SERVER_ON) {socket.emit('dead', state());}
             this.reset()
         }
         if (between((this.y + this.yspeed*scl), 0, height-scl) == false) {
             this.isalive = false;
-            if (SERVER_ON) {socket.emit('dead', state());}
             this.reset()
         }
         for (var i = 0; i < this.tail.length; i++) {
@@ -85,7 +79,6 @@ function Snake(auto) {
             var d = dist(this.x, this.y, pos.x, pos.y);
             if (d < 1) {
                 this.isalive = false;
-                if (SERVER_ON) {socket.emit('dead', state());}
                 this.reset()
             }
         }
