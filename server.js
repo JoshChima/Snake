@@ -1,4 +1,4 @@
-var Port = 5000;
+var PORT = process.env.PORT || 5000;
 var express = require('express');
 var app = express();
 
@@ -7,7 +7,7 @@ var server = http.Server(app);
 
 app.use(express.static('public_html'));
 
-server.listen(Port, function() {
+server.listen(PORT, function() {
     console.log("Snake Server running")
 });
 
