@@ -1,8 +1,8 @@
 //var spawn = require('child_process').spawn;
 //var py = spawn('python', ['../RL_snake.py']);
+
 var priorMove = [];
 
-var socket;
 var s;
 var scl = 20;
 var now = new Date().getMilliseconds();
@@ -17,11 +17,14 @@ var drawstamp = 0;
 
 function preload() {}
 
+
+
 function setup() {
     c = createCanvas(600, 600);
     s = new Snake(AUTO);
     frameRate(fr);
     pickLocation();
+    
     noLoop()
 }
 
@@ -39,6 +42,11 @@ function draw() {
     fill(255, 0, 100);
     rect(food.x, food.y, scl, scl);
     drawstamp++;
+}
+
+function serverPlug() {
+    noLoop()
+    
 }
 
 
@@ -62,6 +70,41 @@ function pickLocation(){
 
 function mousePressed() {
     s.total++;
+}
+
+function botPressed(move) {
+    switch(move) {
+    case 'Up':
+        if (s.getdiry() === 1) {}
+        else {
+            s.dir(0, -1);
+            // if (SERVER_ON) {socket.emit('move', s.data());}
+        }
+        break;
+    case 'Down':
+        if (s.getdiry() === -1) {}
+        else {
+            s.dir(0, 1);
+            // if (SERVER_ON) {socket.emit('move', s.data());}
+        }
+        break;
+    case 'Left':
+        if (s.getdirx() === 1) {}
+        else {
+            s.dir(-1, 0);
+            // if (SERVER_ON) {socket.emit('move', s.data());}
+        }
+        break;
+    case 'Right':
+        if (s.getdirx() === -1) {}
+        else {
+            s.dir(1, 0);
+            // if (SERVER_ON) {socket.emit('move', s.data());}
+        }
+        break;
+    default:
+        break;
+    }
 }
 
 function keyPressed() {
