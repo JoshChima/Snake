@@ -135,4 +135,12 @@ function keyPressed() {
     }
 }
 
-
+document.getElementById('pause').onclick = function () {
+    if (paused) {
+        loop();
+        paused = false;
+    } else {
+        noLoop();
+        paused = true;
+    }
+}
