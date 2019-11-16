@@ -9,7 +9,7 @@ function Snake(auto) {
     this.y = (height)/2;
     this.xspeed = 1;
     this.yspeed = 0;
-    this.total = 0;    
+    this.total = 0;
     this.livingscore = 0.5;
     this.score = 0;
 

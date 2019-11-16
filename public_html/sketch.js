@@ -121,13 +121,7 @@ function keyPressed() {
         if (s.getdirx() === -1) { }
         else { s.dir(1, 0); }
     } else if (event.key === "p") {
-        if (paused) {
-            loop();
-            paused = false;
-        } else {
-            noLoop();
-            paused = true;
-        }
+        pause()
         // logImage(saveFrames("dummy", "png", 1, 1, data => {
         //     return data;
         // }))
@@ -135,7 +129,7 @@ function keyPressed() {
     }
 }
 
-document.getElementById('pause').onclick = function () {
+function pause() {
     if (paused) {
         loop();
         paused = false;
