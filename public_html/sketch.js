@@ -21,10 +21,22 @@ function preload() {}
 
 function setup() {
     c = createCanvas(600, 600);
+    c.parent('jumbo-canvas')
+    resetSketch();
+    var pauseButton = createButton("pause");
+    pauseButton.parent('jumbo-canvas');
+    pauseButton.mousePressed(pause);
+
+    var resetButton = createButton("reset");
+    resetButton.parent('jumbo-canvas');
+    resetButton.mousePressed(resetSketch);
+}
+
+function resetSketch() {
     s = new Snake(AUTO);
     frameRate(fr);
     pickLocation();
-    
+
     noLoop()
 }
 
@@ -44,18 +56,18 @@ function draw() {
     drawstamp++;
 }
 
-function serverPlug() {
-    noLoop()
-    
-}
+// function serverPlug() {
+//     noLoop()
+
+// }
 
 
-function pickLocation(){
-    var cols = floor(width/scl);
-    var rows = floor(height/scl);
-    
+function pickLocation() {
+    var cols = floor(width / scl);
+    var rows = floor(height / scl);
+
     if (s.tail.length > 0) {
-        for (var i=0; i < s.total; i++) {
+        for (var i = 0; i < s.total; i++) {
             food = createVector(floor(random(cols)), floor(random(rows)));
             food.mult(scl);
             if (food.equals(s.tail[i])) {
@@ -68,71 +80,69 @@ function pickLocation(){
     }
 }
 
-function mousePressed() {
-    s.total++;
-}
+// function mousePressed() {
+//     s.total++;
+// }
 
 function botPressed(move) {
-    switch(move) {
-    case 'Up':
-        if (s.getdiry() === 1) {}
-        else {
-            s.dir(0, -1);
-            // if (SERVER_ON) {socket.emit('move', s.data());}
-        }
-        break;
-    case 'Down':
-        if (s.getdiry() === -1) {}
-        else {
-            s.dir(0, 1);
-            // if (SERVER_ON) {socket.emit('move', s.data());}
-        }
-        break;
-    case 'Left':
-        if (s.getdirx() === 1) {}
-        else {
-            s.dir(-1, 0);
-            // if (SERVER_ON) {socket.emit('move', s.data());}
-        }
-        break;
-    case 'Right':
-        if (s.getdirx() === -1) {}
-        else {
-            s.dir(1, 0);
-            // if (SERVER_ON) {socket.emit('move', s.data());}
-        }
-        break;
-    default:
-        break;
+    switch (move) {
+        case 'Up':
+            if (s.getdiry() === 1) {} else {
+                s.dir(0, -1);
+                // if (SERVER_ON) {socket.emit('move', s.data());}
+            }
+            break;
+        case 'Down':
+            if (s.getdiry() === -1) {} else {
+                s.dir(0, 1);
+                // if (SERVER_ON) {socket.emit('move', s.data());}
+            }
+            break;
+        case 'Left':
+            if (s.getdirx() === 1) {} else {
+                s.dir(-1, 0);
+                // if (SERVER_ON) {socket.emit('move', s.data());}
+            }
+            break;
+        case 'Right':
+            if (s.getdirx() === -1) {} else {
+                s.dir(1, 0);
+                // if (SERVER_ON) {socket.emit('move', s.data());}
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+function pause() {
+    if (paused) {
+        loop();
+        paused = false;
+    } else {
+        noLoop();
+        paused = true;
     }
 }
 
 function keyPressed() {
     if (keyCode === UP_ARROW) {
-        if (s.getdiry() === 1) { }
-        else { s.dir(0, -1); }
-    } else if (keyCode === DOWN_ARROW) {
-        if (s.getdiry() === -1) { }
-        else { s.dir(0, 1); }
-    } else if (keyCode === LEFT_ARROW) {
-        if (s.getdirx() === 1) { }
-        else { s.dir(-1, 0); }
-    } else if (keyCode === RIGHT_ARROW) {
-        if (s.getdirx() === -1) { }
-        else { s.dir(1, 0); }
-    } else if (event.key === "p") {
-        if (paused) {
-            loop();
-            paused = false;
-        } else {
-            noLoop();
-            paused = true;
+        if (s.getdiry() === 1) {} else {
+            s.dir(0, -1);
         }
-        // logImage(saveFrames("dummy", "png", 1, 1, data => {
-        //     return data;
-        // }))
-        //saveCanvas(c, "frame_test", "png");
+    } else if (keyCode === DOWN_ARROW) {
+        if (s.getdiry() === -1) {} else {
+            s.dir(0, 1);
+        }
+    } else if (keyCode === LEFT_ARROW) {
+        if (s.getdirx() === 1) {} else {
+            s.dir(-1, 0);
+        }
+    } else if (keyCode === RIGHT_ARROW) {
+        if (s.getdirx() === -1) {} else {
+            s.dir(1, 0);
+        }
+    } else if (event.key === "p") {
+        pause()
     }
 }
-
-
