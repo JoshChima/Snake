@@ -1,10 +1,12 @@
 var PORT = process.env.PORT || 5000;
-var express = require('express');
+const express = require('express');
+const _ = require('underscore')
 var app = express();
 
 var http = require('http');
 var server = http.Server(app);
 
+app.use(_)
 app.use(express.static('public_html'));
 
 server.listen(PORT, function() {
